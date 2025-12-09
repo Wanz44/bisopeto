@@ -4,9 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BISO PETO - KIN ECO-MAP | Votre ville plus propre, votre avenir plus vert</title>
+    <title>BISO PETO - KIN ECO-MAP | Gestion intelligente des déchets à Kinshasa</title>
+    <meta name="description" content="Application innovante pour moderniser la gestion des déchets, l'assainissement urbain et la sensibilisation écologique à Kinshasa et en RDC">
+    <meta name="keywords" content="gestion déchets, recyclage, Kinshasa, écologie, application mobile, BISO PETO, KIN ECO-MAP, environnement, développement durable">
+    <meta name="author" content="BISO PETO Group SARL">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 
 <body>
@@ -15,11 +20,14 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <img src="KIN ECO MAP.png" alt="BISO PETO - KIN ECO-MAP">
-                    <div class="logo-text">BISO PETO</div>
+                    <img src="images/KIN ECO MAP.png" alt="Logo BISO PETO - KIN ECO-MAP" loading="lazy">
+                    <div class="logo-text">
+                        <span class="logo-main">BISO PETO</span>
+                        <span class="logo-sub">KIN ECO-MAP</span>
+                    </div>
                 </div>
                 <nav>
-                    <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menu mobile">
                         <i class="fas fa-bars"></i>
                     </button>
                     <div class="nav-links" id="nav-links">
@@ -27,7 +35,7 @@
                         <a href="#modules">Modules</a>
                         <a href="#objectives">Objectifs</a>
                         <a href="#contact">Contact</a>
-                        <a href="#" class="btn">Télécharger l'App</a>
+                        <a href="#download" class="btn btn-nav">Télécharger</a>
                     </div>
                 </nav>
             </div>
@@ -37,264 +45,442 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>KIN ECO-MAP</h1>
-            <p>Votre ville plus propre, votre avenir plus vert</p>
-            <p>Une application innovante pour moderniser la gestion des déchets, l'assainissement urbain et la
-                sensibilisation écologique</p>
-            <a href="#" class="btn">Découvrir l'application</a>
-            <a href="#contact" class="btn btn-outline">Nous contacter</a>
+            <div class="hero-content">
+                <h1>KIN ECO-MAP</h1>
+                <p class="hero-subtitle">Votre ville plus propre, votre avenir plus vert</p>
+                <p class="hero-description">Une plateforme numérique innovante pour transformer la gestion des déchets, l'assainissement urbain et promouvoir l'écologie citoyenne à Kinshasa.</p>
+                <div class="hero-buttons">
+                    <a href="#download" class="btn btn-hero">
+                        <i class="fas fa-download"></i>Télécharger l'App
+                    </a>
+                    <a href="#contact" class="btn btn-outline">
+                        <i class="fas fa-envelope"></i>Nous contacter
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">5000+</span>
+                        <span class="stat-label">Utilisateurs</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">120+</span>
+                        <span class="stat-label">Quartiers couverts</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">85%</span>
+                        <span class="stat-label">Satisfaction</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-wave">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="currentColor"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="currentColor"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="currentColor"></path>
+            </svg>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about">
+    <section id="about" class="section">
         <div class="container">
-            <div class="section-title">
-                <h2>À propos de KIN ECO-MAP</h2>
-                <p>Une initiative portée par BISO PETO Group SARL pour transformer la gestion des déchets à Kinshasa et
-                    dans les grandes villes africaines</p>
+            <div class="section-header">
+                <h2 class="section-title">À propos de KIN ECO-MAP</h2>
+                <p class="section-subtitle">Une initiative portée par BISO PETO Group SARL pour transformer la gestion des déchets à Kinshasa</p>
             </div>
             <div class="about-content">
                 <div class="about-text">
-                    <h3>Notre Mission</h3>
-                    <p>KIN ECO-MAP est une application mobile et web innovante qui centralise plusieurs fonctionnalités
-                        dans un écosystème numérique unique, combinant cartographie, éducation, collecte intelligente et
-                        engagement communautaire.</p>
-                    <p>Nous digitalisons la chaîne de collecte et de recyclage des déchets tout en promouvant la
-                        responsabilité écologique citoyenne et entrepreneuriale.</p>
-                    <h3>Notre Vision</h3>
-                    <p>Créer des villes africaines plus propres, plus vertes et plus durables grâce à la technologie et
-                        l'engagement communautaire.</p>
+                    <div class="about-highlight">
+                        <div class="highlight-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="highlight-content">
+                            <h3>Notre Mission</h3>
+                            <p>KIN ECO-MAP est une plateforme numérique complète qui centralise la gestion intelligente des déchets, combinant cartographie interactive, éducation environnementale et engagement communautaire.</p>
+                        </div>
+                    </div>
+                    <div class="about-highlight">
+                        <div class="highlight-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="highlight-content">
+                            <h3>Notre Vision</h3>
+                            <p>Créer des villes africaines plus propres, plus vertes et plus durables grâce à l'innovation technologique et à la mobilisation citoyenne.</p>
+                        </div>
+                    </div>
+                    <div class="about-features">
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Digitalisation complète de la chaîne de collecte</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Sensibilisation écologique interactive</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Données en temps réel pour une ville intelligente</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="about-image">
-                    <img src="Meilleur Guide _ Utiliser un Sac Poubelle Dans la Poubelle Jaune - Astuces Simples et Pratiques.jpg"
-                        alt="Équipe BISO PETO">
+                    <div class="image-container">
+                        <img src="images/App3.png" alt="Interface KIN ECO-MAP" loading="lazy">
+                        <div class="image-overlay">
+                            <div class="overlay-content">
+                                <i class="fas fa-play-circle"></i>
+                                <p>Découvrez notre application</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="image-badge">
+                        <i class="fas fa-leaf"></i>
+                        <span>Éco-innovation made in Congo</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Modules Section -->
-    <section id="modules" style="background: var(--white);">
+    <section id="modules" class="section section-gray">
         <div class="container">
-            <div class="section-title">
-                <h2>Nos Modules</h2>
-                <p>Découvrez les fonctionnalités complètes de KIN ECO-MAP</p>
+            <div class="section-header">
+                <h2 class="section-title">Nos Modules</h2>
+                <p class="section-subtitle">Des fonctionnalités complètes pour une gestion optimale des déchets</p>
             </div>
             <div class="modules-grid">
                 <!-- Module 1 -->
-                <div class="module-card">
-                    <div class="module-icon">
-                        <i class="fas fa-home"></i>
+                <div class="module-card" data-aos="fade-up">
+                    <div class="module-header">
+                        <div class="module-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <span class="module-badge">Populaire</span>
                     </div>
-                    <h3>Module Éco-Citoyen</h3>
-                    <p>Offrir aux ménages un espace digital pour gérer leurs abonnements, suivre la collecte et
-                        participer à la propreté urbaine.</p>
+                    <h3>Éco-Citoyen</h3>
+                    <p class="module-description">Gérez vos abonnements, suivez les collectes et participez à la propreté urbaine.</p>
                     <ul class="module-features">
-                        <li>Création de profil citoyen</li>
-                        <li>Carte interactive avec géolocalisation</li>
-                        <li>Paiement et renouvellement d'abonnement</li>
-                        <li>Historique des collectes et points de fidélité</li>
-                        <li>Gamification avec badges et classements</li>
+                        <li><i class="fas fa-check"></i>Profil citoyen digital</li>
+                        <li><i class="fas fa-check"></i>Carte interactive géolocalisée</li>
+                        <li><i class="fas fa-check"></i>Paiement en ligne sécurisé</li>
+                        <li><i class="fas fa-check"></i>Système de points fidélité</li>
+                        <li><i class="fas fa-check"></i>Classements et badges</li>
                     </ul>
+                    <a href="#" class="module-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
                 </div>
 
                 <!-- Module 2 -->
-                <div class="module-card">
-                    <div class="module-icon">
-                        <i class="fas fa-building"></i>
+                <div class="module-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="module-header">
+                        <div class="module-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
                     </div>
-                    <h3>Module Éco-Entreprise</h3>
-                    <p>Permettre aux entreprises de mesurer et d'améliorer leur impact environnemental.</p>
+                    <h3>Éco-Entreprise</h3>
+                    <p class="module-description">Optimisez votre impact environnemental et votre gestion des déchets.</p>
                     <ul class="module-features">
-                        <li>Compte professionnel avec identification</li>
-                        <li>Gestion des abonnements et contrats</li>
-                        <li>Tableau de bord de performance environnementale</li>
-                        <li>Certificat Éco-Responsable numérique</li>
-                        <li>Visibilité sur la carte Éco-map business</li>
+                        <li><i class="fas fa-check"></i>Compte professionnel vérifié</li>
+                        <li><i class="fas fa-check"></i>Tableau de bord analytique</li>
+                        <li><i class="fas fa-check"></i>Certification éco-responsable</li>
+                        <li><i class="fas fa-check"></i>Gestion centralisée des contrats</li>
+                        <li><i class="fas fa-check"></i>Reporting environnemental</li>
                     </ul>
+                    <a href="#" class="module-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
                 </div>
 
                 <!-- Module 3 -->
-                <div class="module-card">
-                    <div class="module-icon">
-                        <i class="fas fa-truck"></i>
+                <div class="module-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="module-header">
+                        <div class="module-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
                     </div>
-                    <h3>Module Collecte & Logistique</h3>
-                    <p>Optimiser la gestion terrain des opérations de collecte.</p>
+                    <h3>Collecte & Logistique</h3>
+                    <p class="module-description">Optimisez vos opérations de collecte avec notre outil de gestion terrain.</p>
                     <ul class="module-features">
-                        <li>Gestion des itinéraires et planification</li>
-                        <li>Suivi GPS en temps réel des véhicules</li>
-                        <li>Notifications automatiques</li>
-                        <li>Gestion des incidents signalés</li>
+                        <li><i class="fas fa-check"></i>Planification intelligente</li>
+                        <li><i class="fas fa-check"></i>Suivi GPS en temps réel</li>
+                        <li><i class="fas fa-check"></i>Notifications automatisées</li>
+                        <li><i class="fas fa-check"></i>Gestion des incidents</li>
+                        <li><i class="fas fa-check"></i>Rapports de performance</li>
                     </ul>
+                    <a href="#" class="module-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
                 </div>
 
                 <!-- Module 4 -->
-                <div class="module-card">
-                    <div class="module-icon">
-                        <i class="fas fa-graduation-cap"></i>
+                <div class="module-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="module-header">
+                        <div class="module-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
                     </div>
-                    <h3>Module Éducation & Formation</h3>
-                    <p>Former et sensibiliser la population à l'assainissement et au recyclage.</p>
+                    <h3>Éducation & Formation</h3>
+                    <p class="module-description">Sensibilisez et formez vos équipes aux bonnes pratiques environnementales.</p>
                     <ul class="module-features">
-                        <li>Cours vidéos interactifs</li>
-                        <li>Quiz, certificats et parcours d'apprentissage</li>
-                        <li>Espace jeunes et projets scolaires</li>
-                        <li>Partenariats avec écoles et ONG</li>
+                        <li><i class="fas fa-check"></i>Cours vidéo interactifs</li>
+                        <li><i class="fas fa-check"></i>Quiz et certifications</li>
+                        <li><i class="fas fa-check"></i>Programmes scolaires</li>
+                        <li><i class="fas fa-check"></i>Ressources pédagogiques</li>
+                        <li><i class="fas fa-check"></i>Parcours personnalisés</li>
                     </ul>
+                    <a href="#" class="module-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
                 </div>
-
-                <!-- Module 5 -->
-                <div class="module-card">
-                    <div class="module-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Module Communautaire & Engagement</h3>
-                    <p>Créer une communauté active autour de la propreté et de la durabilité.</p>
-                    <ul class="module-features">
-                        <li>Forum local par quartier</li>
-                        <li>Programme d'ambassadeurs</li>
-                        <li>Calendrier des actions citoyennes</li>
-                        <li>Classement des quartiers les plus propres</li>
-                    </ul>
-                </div>
-
-                <!-- Module 6 -->
-                <div class="module-card">
-                    <div class="module-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Module Data & Innovation</h3>
-                    <p>Exploiter les données environnementales pour une ville plus intelligente.</p>
-                    <ul class="module-features">
-                        <li>Analyse automatique des niveaux de propreté</li>
-                        <li>Indicateurs temps réel (recyclage, pollution)</li>
-                        <li>Tableau de bord analytique pour les mairies</li>
-                        <li>Publication de données ouvertes (Open Data)</li>
-                    </ul>
-                </div>
+            </div>
+            <div class="section-cta">
+                <a href="#modules-full" class="btn btn-outline">
+                    Voir tous les modules <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Objectives Section -->
-    <section id="objectives" class="objectives">
+    <section id="objectives" class="section">
         <div class="container">
-            <div class="section-title">
-                <h2>Nos Objectifs</h2>
-                <p>Les principaux objectifs de KIN ECO-MAP</p>
+            <div class="section-header">
+                <h2 class="section-title">Nos Objectifs</h2>
+                <p class="section-subtitle">Les ambitions qui guident notre action quotidienne</p>
             </div>
             <div class="objectives-grid">
-                <div class="objective-card">
+                <div class="objective-card" data-aos="zoom-in">
                     <div class="objective-icon">
                         <i class="fas fa-recycle"></i>
                     </div>
-                    <h3>Promouvoir la responsabilité écologique</h3>
-                    <p>Sensibiliser citoyens et entreprises à leur impact environnemental.</p>
+                    <h3>Responsabilité écologique</h3>
+                    <p>Sensibiliser et impliquer citoyens et entreprises dans la protection de l'environnement.</p>
+                    <div class="objective-progress">
+                        <div class="progress-bar" style="width: 85%"></div>
+                        <span>85% atteint</span>
+                    </div>
                 </div>
-                <div class="objective-card">
+                <div class="objective-card" data-aos="zoom-in" data-aos-delay="100">
                     <div class="objective-icon">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
-                    <h3>Digitaliser la collecte</h3>
-                    <p>Moderniser la chaîne de collecte et de recyclage des déchets.</p>
+                    <h3>Digitalisation</h3>
+                    <p>Moderniser et optimiser la chaîne complète de gestion des déchets grâce au numérique.</p>
+                    <div class="objective-progress">
+                        <div class="progress-bar" style="width: 70%"></div>
+                        <span>70% atteint</span>
+                    </div>
                 </div>
-                <div class="objective-card">
+                <div class="objective-card" data-aos="zoom-in" data-aos-delay="200">
                     <div class="objective-icon">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
-                    <h3>Former et sensibiliser</h3>
-                    <p>Développer la culture environnementale à travers l'éducation.</p>
+                    <h3>Éducation environnementale</h3>
+                    <p>Développer une culture écologique durable à travers des programmes éducatifs innovants.</p>
+                    <div class="objective-progress">
+                        <div class="progress-bar" style="width: 65%"></div>
+                        <span>65% atteint</span>
+                    </div>
                 </div>
-                <div class="objective-card">
+                <div class="objective-card" data-aos="zoom-in" data-aos-delay="300">
                     <div class="objective-icon">
                         <i class="fas fa-chart-bar"></i>
                     </div>
-                    <h3>Analyser les performances</h3>
-                    <p>Offrir une vue analytique des performances écologiques de la ville.</p>
+                    <h3>Performance urbaine</h3>
+                    <p>Améliorer les indicateurs de propreté et de qualité de vie dans les villes africaines.</p>
+                    <div class="objective-progress">
+                        <div class="progress-bar" style="width: 60%"></div>
+                        <span>60% atteint</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact">
+    <section id="contact" class="section section-dark">
         <div class="container">
-            <div class="section-title">
-                <h2>Contactez-nous</h2>
-                <p>Prenez contact avec l'équipe BISO PETO</p>
+            <div class="section-header">
+                <h2 class="section-title">Contactez-nous</h2>
+                <p class="section-subtitle">Parlons de votre projet et de vos besoins</p>
             </div>
+            
+            <div class="contact-alert" id="formAlert" style="display: none;"></div>
+            
             <div class="contact-content">
                 <div class="contact-info">
-                    <div class="contact-item">
+                    <div class="contact-card">
                         <div class="contact-icon">
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
                         <div class="contact-details">
                             <h4>Adresse</h4>
-                            <p>N°63, Avenue Colonel MONDJIBA, Kinshasa</p>
+                            <p>N°63, Avenue Colonel MONDJIBA</p>
+                            <p>Kinshasa, République Démocratique du Congo</p>
                         </div>
                     </div>
-                    <div class="contact-item">
+                    
+                    <div class="contact-card">
                         <div class="contact-icon">
                             <i class="fas fa-phone"></i>
                         </div>
                         <div class="contact-details">
                             <h4>Téléphone</h4>
                             <p>+243 85 229 1755</p>
+                            <p>+243 81 234 5678</p>
                         </div>
                     </div>
-                    <div class="contact-item">
+                    
+                    <div class="contact-card">
                         <div class="contact-icon">
                             <i class="fas fa-envelope"></i>
                         </div>
                         <div class="contact-details">
                             <h4>Email</h4>
                             <p>contact@bisopeto.com</p>
+                            <p>support@kin-ecomap.com</p>
                         </div>
                     </div>
-                    <div class="contact-item">
+                    
+                    <div class="contact-card">
                         <div class="contact-icon">
-                            <i class="fas fa-globe"></i>
+                            <i class="fas fa-clock"></i>
                         </div>
                         <div class="contact-details">
-                            <h4>Site Web</h4>
-                            <p>www.bisopeto.com</p>
+                            <h4>Horaires d'ouverture</h4>
+                            <p>Lundi - Vendredi: 8h00 - 18h00</p>
+                            <p>Samedi: 9h00 - 13h00</p>
                         </div>
                     </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-id-card"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>Informations légales</h4>
-                            <p>CD/KNM/RCCM/25-B-01937</p>
-                            <p>Id.Nat.01-S9502-N76752K</p>
-                            <p>N° Impôt. A2537519K</p>
+                    
+                    <div class="contact-social">
+                        <h4>Suivez-nous</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link facebook" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-link twitter" aria-label="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-link instagram" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-link linkedin" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="social-link whatsapp" aria-label="WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Nom complet</label>
-                            <input type="text" id="name" class="form-control" required>
+                
+                <div class="contact-form-container">
+                    <div class="form-header">
+                        <h3>Envoyez-nous un message</h3>
+                        <p>Nous vous répondrons dans les 24 heures</p>
+                    </div>
+                    
+                    <form id="contactForm" novalidate>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Nom complet *</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="name" name="name" required placeholder="Votre nom et prénom">
+                                </div>
+                                <div class="error-message" id="nameError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Adresse email *</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                                </div>
+                                <div class="error-message" id="emailError"></div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Adresse email</label>
-                            <input type="email" id="email" class="form-control" required>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Téléphone</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-phone"></i>
+                                    <input type="tel" id="phone" name="phone" placeholder="+243 00 000 0000">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="company">Entreprise</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-building"></i>
+                                    <input type="text" id="company" name="company" placeholder="Nom de votre entreprise">
+                                </div>
+                            </div>
                         </div>
+                        
                         <div class="form-group">
-                            <label for="subject">Sujet</label>
-                            <input type="text" id="subject" class="form-control" required>
+                            <label for="subject">Sujet *</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-tag"></i>
+                                <select id="subject" name="subject" required>
+                                    <option value="">Sélectionnez un sujet</option>
+                                    <option value="info">Demande d'information</option>
+                                    <option value="partnership">Partenariat</option>
+                                    <option value="support">Support technique</option>
+                                    <option value="quote">Demande de devis</option>
+                                    <option value="other">Autre</option>
+                                </select>
+                            </div>
+                            <div class="error-message" id="subjectError"></div>
                         </div>
+                        
                         <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" class="form-control" required></textarea>
+                            <label for="message">Message *</label>
+                            <div class="textarea-with-icon">
+                                <i class="fas fa-comment-dots"></i>
+                                <textarea id="message" name="message" required placeholder="Décrivez votre demande en détail..." rows="5"></textarea>
+                            </div>
+                            <div class="error-message" id="messageError"></div>
                         </div>
-                        <button type="submit" class="btn" style="width: 100%;">Envoyer le message</button>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="newsletter" name="newsletter">
+                                <label for="newsletter">Je souhaite recevoir les actualités et offres de BISO PETO</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-submit">
+                            <button type="submit" class="btn btn-submit" id="submitBtn">
+                                <span id="btnText">Envoyer le message</span>
+                                <div class="spinner" id="spinner"></div>
+                            </button>
+                            <p class="form-note">* Champs obligatoires</p>
+                        </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="section section-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Téléchargez KIN ECO-MAP</h2>
+                <p>Disponible sur iOS et Android. Rejoignez la communauté des éco-citoyens !</p>
+                <div class="download-buttons">
+                    <a href="#" class="download-btn app-store">
+                        <i class="fab fa-apple"></i>
+                        <div class="download-text">
+                            <span>Téléchargez sur</span>
+                            <strong>App Store</strong>
+                        </div>
+                    </a>
+                    <a href="#" class="download-btn google-play">
+                        <i class="fab fa-google-play"></i>
+                        <div class="download-text">
+                            <span>Disponible sur</span>
+                            <strong>Google Play</strong>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -304,50 +490,93 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-column">
-                    <h3>BISO PETO</h3>
-                    <p>Transformons ensemble la gestion des déchets et créons des villes plus propres et durables.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="images/KIN ECO MAP.png" alt="BISO PETO" loading="lazy">
+                        <div class="footer-logo-text">
+                            <h3>BISO PETO</h3>
+                            <p>KIN ECO-MAP</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">Leader dans la digitalisation de la gestion des déchets et la promotion de l'écologie urbaine en RDC.</p>
+                    <div class="footer-legal">
+                        <p><strong>Identifiants légaux :</strong></p>
+                        <p>CD/KNM/RCCM/25-B-01937</p>
+                        <p>Id.Nat.01-S9502-N76752K | N° Impôt. A2537519K</p>
                     </div>
                 </div>
-                <div class="footer-column">
-                    <h3>Liens rapides</h3>
+                
+                <div class="footer-section">
+                    <h4>Liens rapides</h4>
                     <ul class="footer-links">
                         <li><a href="#about">À propos</a></li>
                         <li><a href="#modules">Modules</a></li>
                         <li><a href="#objectives">Objectifs</a></li>
                         <li><a href="#contact">Contact</a></li>
+                        <li><a href="#download">Télécharger</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
-                    <h3>Modules</h3>
+                
+                <div class="footer-section">
+                    <h4>Modules</h4>
                     <ul class="footer-links">
                         <li><a href="#">Éco-Citoyen</a></li>
                         <li><a href="#">Éco-Entreprise</a></li>
                         <li><a href="#">Collecte & Logistique</a></li>
                         <li><a href="#">Éducation & Formation</a></li>
+                        <li><a href="#">Communauté</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
-                    <h3>Contact</h3>
-                    <ul class="footer-links">
-                        <li><i class="fas fa-map-marker-alt"></i> Kinshasa</li>
-                        <li><i class="fas fa-phone"></i> +243 85 229 1755</li>
-                        <li><i class="fas fa-envelope"></i> contact@bisopeto.com</li>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>N°63, Av. Colonel MONDJIBA<br>Kinshasa, RDC</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+243 85 229 1755</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>contact@bisopeto.com</span>
+                        </li>
                     </ul>
+                    <div class="newsletter">
+                        <h5>Newsletter</h5>
+                        <div class="newsletter-form">
+                            <input type="email" placeholder="Votre email" id="newsletterEmail">
+                            <button type="button" id="newsletterBtn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
+            
             <div class="footer-bottom">
-                <p>&copy; 2025 BISO PETO / KIN ECO MAP. Tous droits réservés.</p>
+                <div class="footer-copyright">
+                    <p>&copy; 2025 BISO PETO Group SARL - KIN ECO-MAP. Tous droits réservés.</p>
+                </div>
+                <div class="footer-policy">
+                    <a href="#">Politique de confidentialité</a>
+                    <a href="#">Conditions d'utilisation</a>
+                    <a href="#">Mentions légales</a>
+                </div>
             </div>
         </div>
     </footer>
-    <script src="scripte.js"></script>
-</body>
 
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Retour en haut">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script src="script.js"></script>
+</body>
 
 </html>
