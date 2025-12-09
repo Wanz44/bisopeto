@@ -98,7 +98,7 @@
         /* Hero Section */
         .hero {
             padding: 100px 0;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/App3.png') no-repeat center center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('App3.png') no-repeat center center/cover;
             background-size: cover;
             background-position: center;
             color: var(--white);
@@ -516,4 +516,5 @@
             .hero h1 {
                 font-size: 1.8rem;
             }
+
         }
