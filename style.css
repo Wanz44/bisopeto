@@ -180,7 +180,7 @@ header {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), url('images/App3.png') no-repeat center center;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), url('App3.png') no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
     color: var(--white);
@@ -1444,3 +1444,4 @@ footer {
         color: black;
     }
 }
+
