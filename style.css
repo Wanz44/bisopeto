@@ -1444,4 +1444,194 @@ footer {
         color: black;
     }
 }
+/* Styles supplémentaires pour les améliorations */
+
+/* Sélecteur de priorité */
+.priority-selector {
+    margin-top: var(--spacing-xs);
+}
+
+.priority-options {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.priority-option {
+    flex: 1;
+}
+
+.priority-option input[type="radio"] {
+    display: none;
+}
+
+.priority-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm);
+    border: 2px solid var(--gray-light);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+    text-align: center;
+}
+
+.priority-label i {
+    font-size: 1.1rem;
+}
+
+.priority-label.normal {
+    color: var(--info);
+}
+
+.priority-label.urgent {
+    color: var(--error);
+}
+
+.priority-option input[type="radio"]:checked + .priority-label {
+    border-color: currentColor;
+    background-color: rgba(currentColor, 0.1);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-light);
+}
+
+.priority-option input[type="radio"]:checked + .priority-label.normal {
+    border-color: var(--info);
+    background-color: rgba(41, 98, 255, 0.1);
+}
+
+.priority-option input[type="radio"]:checked + .priority-label.urgent {
+    border-color: var(--error);
+    background-color: rgba(255, 61, 0, 0.1);
+}
+
+/* Bouton de fermeture des alertes */
+.alert-close {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+    margin-left: auto;
+    font-size: 1rem;
+    opacity: 0.7;
+    transition: var(--transition);
+}
+
+.alert-close:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Badge urgent dans les notifications */
+.urgent-badge {
+    background: var(--error);
+    color: var(--white);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: var(--spacing-xs);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+/* Style pour les logs de contact */
+.contact-log {
+    background: var(--gray-light);
+    border-left: 4px solid var(--primary);
+    padding: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+}
+
+.contact-log.urgent {
+    border-left-color: var(--error);
+    background: rgba(255, 61, 0, 0.05);
+}
+
+.contact-log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+}
+
+.contact-log-name {
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.contact-log-date {
+    font-size: 0.85rem;
+    color: var(--gray);
+}
+
+.contact-log-subject {
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: var(--dark-light);
+}
+
+/* Dashboard admin */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.stat-card {
+    background: var(--white);
+    padding: var(--spacing-md);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.stat-card.urgent {
+    border-top: 4px solid var(--error);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    display: block;
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-label {
+    color: var(--gray-dark);
+    font-size: 0.9rem;
+}
+
+/* Animation pour les nouvelles notifications */
+@keyframes newNotification {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.new-notification {
+    animation: newNotification 0.5s ease 3;
+}
+
+/* Responsive pour les priorités */
+@media (max-width: 768px) {
+    .priority-options {
+        flex-direction: column;
+    }
+    
+    .priority-label {
+        justify-content: flex-start;
+        padding: var(--spacing-md);
+    }
+}
 
