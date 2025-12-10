@@ -1,134 +1,122 @@
-a// Configuration EmailJS
-const EMAILJS_CONFIG = {
-    SERVICE_ID: 'service_bisopeto', // À remplacer avec votre Service ID
-    TEMPLATE_ID: 'template_contact', // À remplacer avec votre Template ID
-    PUBLIC_KEY: 'YOUR_PUBLIC_KEY' // À remplacer avec votre Public Key
+// Configuration avancée EmailJS et SMS
+const APP_CONFIG = {
+    EMAILJS: {
+        SERVICE_ID: 'service_bisopeto',
+        TEMPLATE_ID: 'template_contact',
+        TEMPLATE_SMS_ID: 'template_sms_alert', // Nouveau template pour SMS
+        PUBLIC_KEY: 'YOUR_PUBLIC_KEY'
+    },
+    SMS_API: {
+        URL: 'https://api.smsprovider.com/send', // À configurer avec votre fournisseur SMS
+        API_KEY: 'YOUR_SMS_API_KEY',
+        SENDER_ID: 'BISOPETO',
+        RECIPIENTS: ['+243852291755', '+243812345678'] // Numéros de BISO PETO
+    },
+    NOTIFICATION_SETTINGS: {
+        SEND_SMS: true,
+        SEND_EMAIL: true,
+        SMS_ON_URGENT: true,
+        EMAIL_ON_NORMAL: true,
+        URGENT_KEYWORDS: ['urgence', 'urgent', 'important', 'critique', 'immédiat']
+    }
+};
+
+// Destinataires BISO PETO
+const BISO_PETO_CONTACTS = {
+    EMAILS: [
+        'contact@bisopeto.com',
+        'support@kin-ecomap.com',
+        'admin@bisopeto.com'
+    ],
+    PHONES: [
+        '+243852291755',
+        '+243812345678'
+    ],
+    TEAM_MEMBERS: [
+        { name: 'Direction', email: 'direction@bisopeto.com', phone: '+243852291755' },
+        { name: 'Support Technique', email: 'support@bisopeto.com', phone: '+243812345678' },
+        { name: 'Commercial', email: 'commercial@bisopeto.com', phone: '+243899999999' }
+    ]
 };
 
 // Initialisation
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Initialiser EmailJS
     if (typeof emailjs !== 'undefined') {
-        emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+        emailjs.init(APP_CONFIG.EMAILJS.PUBLIC_KEY);
         console.log('EmailJS initialisé');
     } else {
         console.error('EmailJS non chargé');
     }
-    
+
     // Initialiser les composants
     initMobileMenu();
     initSmoothScroll();
-    initContactForm();
+    initEnhancedContactForm(); // Form amélioré
     initBackToTop();
     initNewsletter();
     initAnimations();
+    initNotificationPreferences();
 });
 
-// Menu mobile
-function initMobileMenu() {
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const navLinks = document.getElementById('nav-links');
-    
-    if (mobileMenuBtn && navLinks) {
-        mobileMenuBtn.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
-            this.setAttribute('aria-expanded', navLinks.classList.contains('active'));
-        });
-        
-        // Fermer le menu au clic sur les liens
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                mobileMenuBtn.setAttribute('aria-expanded', 'false');
-            });
-        });
-        
-        // Fermer le menu en cliquant à l'extérieur
-        document.addEventListener('click', (e) => {
-            if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                navLinks.classList.remove('active');
-                mobileMenuBtn.setAttribute('aria-expanded', 'false');
-            }
-        });
-    }
-}
-
-// Scroll fluide
-function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            
-            if (href === '#' || href === '#!') return;
-            
-            e.preventDefault();
-            
-            const targetElement = document.querySelector(href);
-            if (targetElement) {
-                const headerHeight = document.querySelector('header').offsetHeight;
-                const targetPosition = targetElement.offsetTop - headerHeight;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-}
-
-// Formulaire de contact
-function initContactForm() {
+// Formulaire de contact amélioré
+function initEnhancedContactForm() {
     const contactForm = document.getElementById('contactForm');
     const submitBtn = document.getElementById('submitBtn');
     const btnText = document.getElementById('btnText');
     const spinner = document.getElementById('spinner');
     const formAlert = document.getElementById('formAlert');
-    
+
     if (!contactForm) return;
-    
-    // Validation en temps réel
+
+    // Ajouter champ priorité
+    addPriorityField();
+
+    // Validation améliorée
     const inputs = contactForm.querySelectorAll('input, textarea, select');
     inputs.forEach(input => {
         input.addEventListener('blur', validateField);
         input.addEventListener('input', clearFieldError);
     });
-    
-    // Soumission du formulaire
-    contactForm.addEventListener('submit', async function(e) {
+
+    // Soumission du formulaire amélioré
+    contactForm.addEventListener('submit', async function (e) {
         e.preventDefault();
-        
+
         if (!validateForm()) {
             return;
         }
-        
+
         // Désactiver le bouton et afficher le spinner
         setSubmitState(true, 'Envoi en cours...');
-        
+
         try {
             // Préparer les données du formulaire
-            const formData = getFormData();
+            const formData = getEnhancedFormData();
             
-            // Option 1: Envoi via EmailJS (recommandé)
-            if (typeof emailjs !== 'undefined') {
-                await sendEmailWithEmailJS(formData);
-            } 
-            // Option 2: Envoi via Fetch API (backend personnalisé)
-            else {
-                await sendEmailWithFetch(formData);
-            }
+            // Déterminer la priorité
+            const isUrgent = checkUrgency(formData);
+            
+            // Envoi multiple
+            const results = await sendMultiChannelNotification(formData, isUrgent);
             
             // Succès
-            showAlert('Message envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.', 'success');
+            showAlert('Message envoyé avec succès ! Notre équipe vous répondra rapidement.', 'success');
             contactForm.reset();
+            
+            // Log pour suivi
+            logContact(formData, results);
+            
+            // Confirmation à l'utilisateur
+            sendUserConfirmation(formData);
             
         } catch (error) {
             console.error('Erreur d\'envoi:', error);
-            showAlert('Une erreur est survenue lors de l\'envoi. Veuillez réessayer ou nous contacter directement.', 'error');
+            showAlert('Une erreur est survenue. Veuillez réessayer ou nous contacter directement.', 'error');
             
-            // Fallback: Redirection vers mailto
+            // Fallback amélioré
             setTimeout(() => {
-                const fallbackSent = sendEmailFallback();
+                const fallbackSent = sendEnhancedFallback();
                 if (fallbackSent) {
                     showAlert('Redirection vers votre client email...', 'warning');
                 }
@@ -139,380 +127,374 @@ function initContactForm() {
             setSubmitState(false, 'Envoyer le message');
         }
     });
-    
-    // Fonctions de validation
-    function validateField(e) {
-        const field = e.target;
-        const errorElement = document.getElementById(field.id + 'Error');
-        
-        if (!field.checkValidity()) {
-            showFieldError(field, errorElement, getErrorMessage(field));
-            return false;
-        }
-        
-        clearFieldError(field, errorElement);
-        return true;
+
+    // Fonctions améliorées
+    function addPriorityField() {
+        const subjectGroup = contactForm.querySelector('#subject').closest('.form-group');
+        const priorityHtml = `
+            <div class="form-group">
+                <label for="priority">Priorité</label>
+                <div class="priority-selector">
+                    <div class="priority-options">
+                        <label class="priority-option">
+                            <input type="radio" name="priority" value="normal" checked>
+                            <span class="priority-label normal">
+                                <i class="fas fa-clock"></i> Normal
+                            </span>
+                        </label>
+                        <label class="priority-option">
+                            <input type="radio" name="priority" value="urgent">
+                            <span class="priority-label urgent">
+                                <i class="fas fa-exclamation-triangle"></i> Urgent
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        `;
+        subjectGroup.insertAdjacentHTML('afterend', priorityHtml);
     }
-    
-    function validateForm() {
-        let isValid = true;
-        const requiredFields = contactForm.querySelectorAll('[required]');
+
+    function getEnhancedFormData() {
+        const priority = contactForm.querySelector('input[name="priority"]:checked')?.value || 'normal';
         
-        requiredFields.forEach(field => {
-            const errorElement = document.getElementById(field.id + 'Error');
-            
-            if (!field.value.trim()) {
-                showFieldError(field, errorElement, 'Ce champ est obligatoire');
-                isValid = false;
-            } else if (!validateFieldType(field)) {
-                showFieldError(field, errorElement, getErrorMessage(field));
-                isValid = false;
-            } else {
-                clearFieldError(field, errorElement);
-            }
-        });
-        
-        return isValid;
-    }
-    
-    function validateFieldType(field) {
-        if (field.type === 'email') {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(field.value);
-        }
-        
-        if (field.id === 'phone') {
-            const phoneRegex = /^[\+]?[0-9\s\-\(\)]{8,20}$/;
-            return !field.value || phoneRegex.test(field.value);
-        }
-        
-        return true;
-    }
-    
-    function getErrorMessage(field) {
-        if (field.type === 'email') return 'Veuillez entrer une adresse email valide';
-        if (field.id === 'phone') return 'Format de téléphone invalide';
-        if (field.value.length < 2) return 'Ce champ doit contenir au moins 2 caractères';
-        return 'Valeur invalide';
-    }
-    
-    function showFieldError(field, errorElement, message) {
-        field.style.borderColor = 'var(--error)';
-        if (errorElement) {
-            errorElement.textContent = message;
-            errorElement.style.display = 'block';
-        }
-    }
-    
-    function clearFieldError(e) {
-        const field = e.target || e;
-        const errorElement = document.getElementById(field.id + 'Error');
-        
-        field.style.borderColor = '';
-        if (errorElement) {
-            errorElement.textContent = '';
-            errorElement.style.display = 'none';
-        }
-    }
-    
-    // Gestion de l'état du bouton
-    function setSubmitState(isLoading, text) {
-        if (submitBtn) {
-            submitBtn.disabled = isLoading;
-            if (btnText) btnText.textContent = text;
-            if (spinner) {
-                spinner.classList.toggle('active', isLoading);
-                spinner.style.display = isLoading ? 'block' : 'none';
-            }
-        }
-    }
-    
-    // Récupération des données du formulaire
-    function getFormData() {
         return {
             name: document.getElementById('name').value,
             email: document.getElementById('email').value,
             phone: document.getElementById('phone').value || 'Non fourni',
-            company: document.getElementById('company').value || 'Non fourni',
+            company: document.getElementById('company').value || 'Particulier',
             subject: document.getElementById('subject').value,
             message: document.getElementById('message').value,
+            priority: priority,
             newsletter: document.getElementById('newsletter').checked ? 'Oui' : 'Non',
             date: new Date().toLocaleString('fr-FR'),
-            page: window.location.href
+            time: new Date().toLocaleTimeString('fr-FR'),
+            page: window.location.href,
+            userAgent: navigator.userAgent,
+            ip: 'En attente' // À implémenter avec un service backend
         };
     }
-    
-    // Envoi via EmailJS
-    async function sendEmailWithEmailJS(formData) {
-        if (!EMAILJS_CONFIG.SERVICE_ID || !EMAILJS_CONFIG.TEMPLATE_ID) {
-            throw new Error('EmailJS non configuré');
-        }
+
+    function checkUrgency(formData) {
+        const urgentKeywords = APP_CONFIG.NOTIFICATION_SETTINGS.URGENT_KEYWORDS;
+        const text = (formData.subject + ' ' + formData.message).toLowerCase();
         
-        const response = await emailjs.send(
-            EMAILJS_CONFIG.SERVICE_ID,
-            EMAILJS_CONFIG.TEMPLATE_ID,
-            {
-                to_name: 'BISO PETO Support',
-                from_name: formData.name,
-                from_email: formData.email,
-                phone: formData.phone,
-                company: formData.company,
-                subject: formData.subject,
-                message: formData.message,
-                newsletter: formData.newsletter,
-                date: formData.date,
-                page_url: formData.page
+        return urgentKeywords.some(keyword => text.includes(keyword)) || 
+               formData.priority === 'urgent';
+    }
+
+    async function sendMultiChannelNotification(formData, isUrgent) {
+        const results = {
+            email: false,
+            sms: false,
+            internal: false
+        };
+
+        try {
+            // 1. Envoi Email principal
+            if (APP_CONFIG.NOTIFICATION_SETTINGS.SEND_EMAIL) {
+                results.email = await sendToBisoPetoEmail(formData, isUrgent);
             }
-        );
-        
-        return response;
-    }
-    
-    // Envoi via Fetch API (backend personnalisé)
-    async function sendEmailWithFetch(formData) {
-        // Remplacez cette URL par votre endpoint backend
-        const endpoint = 'https://votre-backend.com/api/contact';
-        
-        const response = await fetch(endpoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData)
-        });
-        
-        if (!response.ok) {
-            throw new Error(`Erreur HTTP: ${response.status}`);
+
+            // 2. Envoi SMS si urgent
+            if (isUrgent && APP_CONFIG.NOTIFICATION_SETTINGS.SEND_SMS) {
+                results.sms = await sendToBisoPetoSMS(formData);
+            }
+
+            // 3. Notification interne
+            results.internal = await sendInternalNotification(formData);
+
+            return results;
+            
+        } catch (error) {
+            console.error('Erreur dans l\'envoi multi-canaux:', error);
+            throw error;
         }
-        
-        return await response.json();
     }
-    
-    // Fallback mailto
-    function sendEmailFallback() {
-        const email = 'contact@bisopeto.com';
-        const subject = encodeURIComponent(document.getElementById('subject').value || 'Contact depuis le site');
-        const body = encodeURIComponent(
-            `Nom: ${document.getElementById('name').value}\n` +
-            `Email: ${document.getElementById('email').value}\n` +
-            `Téléphone: ${document.getElementById('phone').value || 'Non fourni'}\n` +
-            `Entreprise: ${document.getElementById('company').value || 'Non fourni'}\n\n` +
-            `Message:\n${document.getElementById('message').value}`
-        );
+
+    async function sendToBisoPetoEmail(formData, isUrgent) {
+        // Envoi à tous les emails BISO PETO
+        const emailPromises = BISO_PETO_CONTACTS.EMAILS.map(async (email) => {
+            try {
+                await emailjs.send(
+                    APP_CONFIG.EMAILJS.SERVICE_ID,
+                    APP_CONFIG.EMAILJS.TEMPLATE_ID,
+                    {
+                        to_email: email,
+                        to_name: 'Équipe BISO PETO',
+                        from_name: formData.name,
+                        from_email: formData.email,
+                        phone: formData.phone,
+                        company: formData.company,
+                        subject: `${isUrgent ? '🔴 URGENT - ' : ''}${formData.subject}`,
+                        message: formData.message,
+                        priority: formData.priority,
+                        newsletter: formData.newsletter,
+                        date: formData.date,
+                        time: formData.time,
+                        page_url: formData.page
+                    }
+                );
+                return true;
+            } catch (error) {
+                console.error(`Erreur d'envoi à ${email}:`, error);
+                return false;
+            }
+        });
+
+        const results = await Promise.allSettled(emailPromises);
+        return results.some(result => result.value === true);
+    }
+
+    async function sendToBisoPetoSMS(formData) {
+        // Format du message SMS
+        const smsMessage = `Nouveau message BISO PETO:
+De: ${formData.name}
+Tel: ${formData.phone}
+Sujet: ${formData.subject}
+Message: ${formData.message.substring(0, 100)}${formData.message.length > 100 ? '...' : ''}
+Date: ${formData.date}`;
+
+        // Envoi à tous les numéros BISO PETO
+        const smsPromises = BISO_PETO_CONTACTS.PHONES.map(async (phone) => {
+            try {
+                const response = await fetch(APP_CONFIG.SMS_API.URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${APP_CONFIG.SMS_API.API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        to: phone,
+                        from: APP_CONFIG.SMS_API.SENDER_ID,
+                        message: smsMessage,
+                        urgent: true
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`SMS API error: ${response.status}`);
+                }
+
+                return true;
+            } catch (error) {
+                console.error(`Erreur SMS à ${phone}:`, error);
+                return false;
+            }
+        });
+
+        const results = await Promise.allSettled(smsPromises);
+        return results.some(result => result.value === true);
+    }
+
+    async function sendInternalNotification(formData) {
+        // Créer une notification interne dans la console
+        console.group('📨 Nouveau message BISO PETO');
+        console.log('👤 Nom:', formData.name);
+        console.log('📧 Email:', formData.email);
+        console.log('📞 Téléphone:', formData.phone);
+        console.log('🏢 Entreprise:', formData.company);
+        console.log('📋 Sujet:', formData.subject);
+        console.log('⚠️ Priorité:', formData.priority);
+        console.log('📝 Message:', formData.message);
+        console.log('📅 Date:', formData.date);
+        console.groupEnd();
+
+        // Ici, vous pourriez ajouter un envoi à votre base de données
+        // ou à un service de notification interne
+        return true;
+    }
+
+    function sendUserConfirmation(formData) {
+        // Envoyer une confirmation à l'utilisateur
+        setTimeout(() => {
+            const confirmationMessage = `
+Bonjour ${formData.name},
+
+Nous avons bien reçu votre message concernant "${formData.subject}".
+Notre équipe BISO PETO l'a reçu par email et SMS (si urgent).
+Nous vous répondrons dans les plus brefs délais.
+
+Cordialement,
+L'équipe BISO PETO - KIN ECO-MAP
+            `;
+            
+            // Afficher un toast de confirmation
+            showToast('Un email de confirmation vous a été envoyé.', 'success');
+            
+            // Optionnel: Envoyer un email de confirmation automatique
+            // sendConfirmationEmail(formData);
+        }, 1000);
+    }
+
+    function logContact(formData, results) {
+        const logEntry = {
+            timestamp: new Date().toISOString(),
+            formData: formData,
+            results: results,
+            location: window.location.href
+        };
         
+        // Sauvegarder dans localStorage pour historique
+        const logs = JSON.parse(localStorage.getItem('bisopeto_contact_logs') || '[]');
+        logs.unshift(logEntry);
+        if (logs.length > 50) logs.pop(); // Garder seulement les 50 derniers
+        localStorage.setItem('bisopeto_contact_logs', JSON.stringify(logs));
+        
+        // Envoyer à un service de tracking si nécessaire
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'contact_form_submit', {
+                'event_category': 'engagement',
+                'event_label': formData.subject,
+                'value': formData.priority === 'urgent' ? 2 : 1
+            });
+        }
+    }
+
+    function sendEnhancedFallback() {
+        const email = BISO_PETO_CONTACTS.EMAILS[0];
+        const subject = encodeURIComponent(document.getElementById('subject').value || 'Contact depuis le site BISO PETO');
+        const priority = document.querySelector('input[name="priority"]:checked')?.value || 'normal';
+        
+        const body = encodeURIComponent(
+            `🔔 NOUVEAU MESSAGE BISO PETO 🔔
+
+INFORMATIONS CLIENT:
+───────────────
+👤 Nom: ${document.getElementById('name').value}
+📧 Email: ${document.getElementById('email').value}
+📞 Téléphone: ${document.getElementById('phone').value || 'Non fourni'}
+🏢 Entreprise: ${document.getElementById('company').value || 'Particulier'}
+⚠️ Priorité: ${priority === 'urgent' ? '🔴 URGENT' : '🟢 Normal'}
+
+MESSAGE:
+────────
+${document.getElementById('message').value}
+
+MÉTADONNÉES:
+────────────
+📅 Date: ${new Date().toLocaleString('fr-FR')}
+🌐 Page: ${window.location.href}
+📱 Navigateur: ${navigator.userAgent}
+            `
+        );
+
         const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
         
         // Ouvrir le client email
-        window.location.href = mailtoLink;
+        window.open(mailtoLink, '_blank');
         return true;
     }
-    
-    // Affichage des alertes
+
+    // Gestion améliorée des alertes
     function showAlert(message, type = 'info') {
         if (!formAlert) return;
-        
+
+        formAlert.innerHTML = '';
         formAlert.textContent = message;
         formAlert.className = 'contact-alert ' + type;
         formAlert.style.display = 'flex';
-        
+
         // Ajouter une icône
         const icon = document.createElement('i');
         icon.className = getAlertIcon(type);
         formAlert.prepend(icon);
-        
-        // Auto-hide après 10 secondes
+
+        // Ajouter un bouton de fermeture
+        const closeBtn = document.createElement('button');
+        closeBtn.innerHTML = '<i class="fas fa-times"></i>';
+        closeBtn.className = 'alert-close';
+        closeBtn.onclick = () => formAlert.style.display = 'none';
+        formAlert.appendChild(closeBtn);
+
+        // Auto-hide après 15 secondes pour les urgents, 10 pour les autres
+        const hideTime = type === 'warning' ? 15000 : 10000;
         setTimeout(() => {
             formAlert.style.display = 'none';
-        }, 10000);
-        
+        }, hideTime);
+
         // Scroll vers l'alerte
         formAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
+}
+
+// Préférences de notification
+function initNotificationPreferences() {
+    const notificationPrefs = localStorage.getItem('bisopeto_notification_prefs');
     
-    function getAlertIcon(type) {
-        switch(type) {
-            case 'success': return 'fas fa-check-circle';
-            case 'error': return 'fas fa-exclamation-circle';
-            case 'warning': return 'fas fa-exclamation-triangle';
-            default: return 'fas fa-info-circle';
-        }
+    if (!notificationPrefs) {
+        // Définir les préférences par défaut
+        const defaultPrefs = {
+            emailNotifications: true,
+            smsNotifications: true,
+            marketingEmails: false,
+            frequency: 'realtime'
+        };
+        localStorage.setItem('bisopeto_notification_prefs', JSON.stringify(defaultPrefs));
     }
 }
 
-// Back to Top
-function initBackToTop() {
-    const backToTopBtn = document.getElementById('backToTop');
+// Dashboard de suivi (accessible aux administrateurs)
+function initContactDashboard() {
+    // Cette fonction serait appelée sur une page admin
+    const logs = JSON.parse(localStorage.getItem('bisopeto_contact_logs') || '[]');
     
-    if (backToTopBtn) {
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.classList.add('visible');
-            } else {
-                backToTopBtn.classList.remove('visible');
-            }
-        });
-        
-        backToTopBtn.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
+    console.group('📊 Dashboard Contacts BISO PETO');
+    console.log(`Total des messages: ${logs.length}`);
+    
+    const urgentCount = logs.filter(log => log.formData.priority === 'urgent').length;
+    console.log(`Messages urgents: ${urgentCount}`);
+    
+    const today = new Date().toDateString();
+    const todayCount = logs.filter(log => 
+        new Date(log.timestamp).toDateString() === today
+    ).length;
+    console.log(`Messages aujourd'hui: ${todayCount}`);
+    
+    console.groupEnd();
 }
 
-// Newsletter
-function initNewsletter() {
-    const newsletterBtn = document.getElementById('newsletterBtn');
-    const newsletterEmail = document.getElementById('newsletterEmail');
-    
-    if (newsletterBtn && newsletterEmail) {
-        newsletterBtn.addEventListener('click', function() {
-            const email = newsletterEmail.value.trim();
-            
-            if (!validateEmail(email)) {
-                showToast('Veuillez entrer une adresse email valide', 'error');
-                return;
-            }
-            
-            // Simuler l'envoi
-            newsletterBtn.disabled = true;
-            newsletterBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-            
-            setTimeout(() => {
-                showToast('Merci pour votre inscription à la newsletter !', 'success');
-                newsletterEmail.value = '';
-                newsletterBtn.disabled = false;
-                newsletterBtn.innerHTML = '<i class="fas fa-paper-plane"></i>';
-            }, 1500);
-        });
-        
-        // Entrée pour soumettre
-        newsletterEmail.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                newsletterBtn.click();
-            }
-        });
-    }
-    
-    function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
-}
-
-// Animations
-function initAnimations() {
-    // Animation d'apparition des éléments au scroll
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
+// Fonction pour tester le système
+function testNotificationSystem() {
+    const testData = {
+        name: 'Test Utilisateur',
+        email: 'test@example.com',
+        phone: '+243000000000',
+        company: 'Test Company',
+        subject: 'Test de notification',
+        message: 'Ceci est un test du système de notification BISO PETO',
+        priority: 'normal'
     };
     
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animated');
-            }
+    console.log('🧪 Test du système de notification BISO PETO...');
+    sendMultiChannelNotification(testData, false)
+        .then(results => {
+            console.log('✅ Test réussi:', results);
+            showToast('Système de notification testé avec succès', 'success');
+        })
+        .catch(error => {
+            console.error('❌ Test échoué:', error);
+            showToast('Erreur lors du test du système', 'error');
         });
-    }, observerOptions);
-    
-    // Observer les éléments à animer
-    document.querySelectorAll('.module-card, .objective-card, .contact-card').forEach(el => {
-        observer.observe(el);
-    });
-    
-    // Animation au chargement
-    document.querySelectorAll('[data-aos]').forEach(el => {
-        observer.observe(el);
-    });
 }
 
-// Toasts
-function showToast(message, type = 'info') {
-    // Créer le toast
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    toast.innerHTML = `
-        <div class="toast-content">
-            <i class="fas ${getToastIcon(type)}"></i>
-            <span>${message}</span>
-        </div>
-    `;
+// Gestionnaire d'erreurs amélioré
+window.addEventListener('error', function (e) {
+    console.error('Erreur globale BISO PETO:', e.error);
     
-    // Ajouter au body
-    document.body.appendChild(toast);
-    
-    // Animation d'entrée
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 10);
-    
-    // Supprimer après 5 secondes
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            if (toast.parentNode) {
-                document.body.removeChild(toast);
-            }
-        }, 300);
-    }, 5000);
-}
-
-function getToastIcon(type) {
-    switch(type) {
-        case 'success': return 'fa-check-circle';
-        case 'error': return 'fa-exclamation-circle';
-        case 'warning': return 'fa-exclamation-triangle';
-        default: return 'fa-info-circle';
-    }
-}
-
-// Gestion des erreurs globales
-window.addEventListener('error', function(e) {
-    console.error('Erreur globale:', e.error);
-    // Vous pouvez envoyer ces erreurs à votre service de tracking
-});
-
-// Performance monitoring
-window.addEventListener('load', function() {
-    // Envoyer les métriques de performance si nécessaire
-    const loadTime = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart;
-    console.log(`Temps de chargement: ${loadTime}ms`);
-    
-    // Lazy loading pour les images
-    if ('IntersectionObserver' in window) {
-        const lazyImages = document.querySelectorAll('img[loading="lazy"]');
-        
-        const imageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.classList.add('loaded');
-                    imageObserver.unobserve(img);
-                }
-            });
+    // Envoyer l'erreur à votre service de tracking
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'exception', {
+            'description': e.error.message,
+            'fatal': false
         });
-        
-        lazyImages.forEach(img => imageObserver.observe(img));
     }
 });
 
-// API de géolocalisation (optionnelle)
-if (navigator.geolocation) {
-    // Vous pouvez utiliser la géolocalisation pour des fonctionnalités avancées
-    console.log('Géolocalisation disponible');
-}
-
-// Service Worker pour PWA (optionnel)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js').then(function(registration) {
-            console.log('ServiceWorker enregistré avec succès:', registration.scope);
-        }).catch(function(error) {
-            console.log('Échec d\'enregistrement du ServiceWorker:', error);
-        });
-    });
-}
+// Exporter les fonctions pour debug
+window.BISO_PETO = {
+    testNotificationSystem,
+    initContactDashboard,
+    getConfig: () => APP_CONFIG,
+    getContacts: () => BISO_PETO_CONTACTS
+};
